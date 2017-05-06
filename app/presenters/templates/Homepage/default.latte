@@ -2,13 +2,16 @@
     <h1 class="title is-1" n:block="title">Hello World Blog</h1>
 
     <div class="content">
-    {foreach $posts as $post}
-        <div class="post">
+        <a class="button is-primary" n:href="Post:create">Write new post</a>
+        <br><br>
 
-            <h3><a n:href="Post:show $post->id">{$post->title}</a></h3>
-            <div class="date">{$post->created_at|date:'F j, Y'}</div>
-            <div>{$post->content}</div>
-        </div>
-    {/foreach}
+        {foreach $posts as $post}
+            <div class="post">
+
+                <h3><a n:href="Post:show $post->id">{$post->title}</a></h3>
+                <div class="date">{$post->created_at|date:'F j, Y'}</div>
+                <div>{$post->content}</div>
+            </div>
+        {/foreach}
     </div>
 {/block}

@@ -68,6 +68,12 @@ class PostPresenter extends Nette\Application\UI\Presenter
 	}
 
 
+	/**
+	 * Handle for Comment Creation Success.
+	 * @param $form
+	 * @param $values
+	 */
+
 	public function commentFormSuccess($form, $values)
 	{
 		$postId = $this->getParameter('postId');
@@ -103,5 +109,40 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
 		return $form;
 
+	}
+
+	/**
+	 * Post Form Component factory.
+	 * @return Form
+	 */
+
+	protected function createComponentPostForm()
+	{
+		$form = new Form;
+		$this->configureFormBulma($form);
+
+		$form->addText('title', 'Title:')
+			->setRequired();
+		$form->addTextArea('content', 'Content:')
+			->setRequired();
+
+		$form->addSubmit('send', 'Publish');
+		$form->onSuccess[] = [$this, 'postFormSucceeded'];
+
+		return $form;
+	}
+
+	/**
+	 * Handle for Post Creation Success.
+	 * @param $form
+	 * @param $values
+	 */
+
+	public function postFormSucceeded($form, $values)
+	{
+		$post = $this->database->table('posts')->insert($values);
+
+		$this->flashMessage("Post published!", 'is-success');
+		$this->redirect('show', $post->id);
 	}
 }
