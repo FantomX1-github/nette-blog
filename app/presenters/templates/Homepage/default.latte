@@ -1,13 +1,14 @@
 {block content}
-    <h1 n:block="title">Hello World Blog</h1>
+    <h1 class="title is-1" n:block="title">Hello World Blog</h1>
 
+    <div class="content">
     {foreach $posts as $post}
         <div class="post">
+
+            <h3><a n:href="Post:show $post->id">{$post->title}</a></h3>
             <div class="date">{$post->created_at|date:'F j, Y'}</div>
-
-            <h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
-
             <div>{$post->content}</div>
         </div>
     {/foreach}
+    </div>
 {/block}

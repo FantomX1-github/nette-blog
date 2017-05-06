@@ -1,38 +1,15 @@
-body {
-    font: 16px/1.5 Georgia, Verdana, Arial;
-    margin: 0 auto;
-    width: 600px;
-    color: #333;
-    background-color: #fff;
+.margin-top-10 {
+    margin-top: 1em;
 }
 
-div.flash {
-    color: black;
-    background: #FFF9D7;
-    border: 1px solid #E2C822;
-    padding: 1em;
-    margin: 1em 0;
+.content h3:not(:first-child) {
+    margin-top: 0;
 }
 
-a[href^="#error:"] {
-    background: red;
-    color: white;
+.content h3{
+    margin-bottom: 0;
 }
 
-form th, form td {
-    vertical-align: top;
-    font-weight: normal;
-}
-
-form th {
-    text-align: right;
-}
-
-form .required label {
-    font-weight: bold;
-}
-
-form .error {
-    color: #D00;
-    font-weight: bold;
+.post {
+    margin-bottom: 1em;
 }
