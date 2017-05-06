@@ -28,15 +28,20 @@ class PostPresenter extends Nette\Application\UI\Presenter
 		}
 
 		$this->template->post = $post;
+		$this->template->comments = $post->related('comments')->order('created_at');
+
 	}
 
-	public function renderBulmaForm(Form $form)
+	/**
+	 * Configure form Appearance for Bulma.
+	 * http://bulma.io/documentation/elements/form
+	 * @param Form $form
+	 */
+
+	public function configureFormBulma(Form $form)
 	{
 
 		$formRenderer = $form->getRenderer();
-
-		// Configure form Appearance for Bulma
-		// http://bulma.io/documentation/elements/form
 
 		$formRenderer->wrappers['controls']['container'] = NULL;
 		$formRenderer->wrappers['pair']['container'] = 'div class=field';
@@ -60,8 +65,22 @@ class PostPresenter extends Nette\Application\UI\Presenter
 				}
 			}
 		};
+	}
 
-		return $form;
+
+	public function commentFormSuccess($form, $values)
+	{
+		$postId = $this->getParameter('postId');
+
+		$this->database->table('comments')->insert([
+			'post_id' => $postId,
+			'name' => $values->name,
+			'email' => $values->email,
+			'content' => $values->content,
+		]);
+
+		$this->flashMessage('Comment Added!', 'is-success');
+		$this->redirect('this');
 	}
 
 	/**
@@ -72,13 +91,15 @@ class PostPresenter extends Nette\Application\UI\Presenter
 	protected function createComponentCommentForm()
 	{
 		$form = new Form;
+		$this->configureFormBulma($form);
+
 		$form->addText('name', 'Your Name')->setRequired();
 		$form->addEmail('email', 'Email');
 		$form->addTextArea('content', 'Comment:')
 			->setRequired();
 
 		$form->addSubmit('submit', 'Add comment');
-		$this->renderBulmaForm($form);
+		$form->onSuccess[] = [$this, 'commentFormSuccess'];
 
 		return $form;
 

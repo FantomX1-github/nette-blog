@@ -11,7 +11,8 @@
 
 <body>
 <div class="container">
-    <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+    <br>
+    <div n:foreach="$flashes as $flash" n:class="notification, $flash->type">{$flash->message}</div>
 
     {include content}
 

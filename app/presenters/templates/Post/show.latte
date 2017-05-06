@@ -9,8 +9,30 @@
     </div>
     <hr>
 
-    <div class="container">
-        <h4 class="title is-4">Add Comment</h4>
-        {control commentForm}
+
+    <h4 class="title is-4">Add Comment</h4>
+    {control commentForm}
+
+    <hr>
+    <div class="comments">
+        <h3 class="title is-3">Comments</h3>
+        {foreach $comments as $comment}
+            <div class="box">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>
+                                <a href="mailto:{$comment->email}" n:tag-if="$comment->email">{$comment->name}</a>
+                                said:
+                            </strong>
+                            <br>
+                            {$comment->content}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {/foreach}
+        <br>
     </div>
+
 {/block}
