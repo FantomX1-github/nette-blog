@@ -1,9 +1,16 @@
 {block content}
-    <p><a n:href="Homepage:default"> &larr; back to posts list</a></p>
 
-    <div class="date">{$post->created_at|date:'d j, Y'}</div>
+    <div class="content">
+        <p class="margin-top-10"><a n:href="Homepage:default"> &larr; back to posts list</a></p>
+        <h1 n:block="title">{$post->title}</h1>
+        <div class="date">{$post->created_at|date:'F j, Y'}</div>
 
-    <h1 n:block="title">{$post->title}</h1>
+        <div class="post">{$post->content}</div>
+    </div>
+    <hr>
 
-    <div class="post">{$post->content}</div>
+    <div class="container">
+        <h4 class="title is-4">Add Comment</h4>
+        {control commentForm}
+    </div>
 {/block}
