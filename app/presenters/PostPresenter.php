@@ -127,7 +127,7 @@ class PostPresenter extends Nette\Application\UI\Presenter
 			->setRequired();
 
 		$form->addSubmit('send', 'Publish');
-		$form->onSuccess[] = [$this, 'postFormSucceeded'];
+		$form->onSuccess[] = [$this, 'postFormSuccess'];
 
 		return $form;
 	}
@@ -138,11 +138,32 @@ class PostPresenter extends Nette\Application\UI\Presenter
 	 * @param $values
 	 */
 
-	public function postFormSucceeded($form, $values)
+	public function postFormSuccess($form, $values)
 	{
-		$post = $this->database->table('posts')->insert($values);
+		$postId = $this->getParameter('postId');
+
+		if ($postId) {
+			$post = $this->database->table('posts')->get($postId);
+			$post->update($values);
+		} else {
+			$post = $this->database->table('posts')->insert($values);
+		}
 
 		$this->flashMessage("Post published!", 'is-success');
 		$this->redirect('show', $post->id);
+	}
+
+	/**
+	 * Action for Post Edit.
+	 * @param $postId
+	 */
+
+	public function actionEdit($postId)
+	{
+		$post = $this->database->table('posts')->get($postId);
+		if (!$post) {
+			$this->error('Post not found');
+		}
+		$this['postForm']->setDefaults($post->toArray());
 	}
 }

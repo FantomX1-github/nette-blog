@@ -6,6 +6,9 @@
         <div class="date">{$post->created_at|date:'F j, Y'}</div>
 
         <div class="post">{$post->content}</div>
+
+        <a class="button is-primary" n:href="Post:edit $post->id">Edit post</a>
+
     </div>
     <hr>
 
