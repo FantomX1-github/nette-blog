@@ -16,6 +16,17 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
 
 	/**
+	 * Secure the form for logged In users only.
+	 */
+
+	public function actionCreate()
+	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect('Auth:SignIn');
+		}
+	}
+
+	/**
 	 * Render the post.
 	 * @param $postId the post id.
 	 */
@@ -140,6 +151,10 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
 	public function postFormSuccess($form, $values)
 	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->error('You need to log in to create or edit posts.');
+		}
+
 		$postId = $this->getParameter('postId');
 
 		if ($postId) {
@@ -160,6 +175,11 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
 	public function actionEdit($postId)
 	{
+
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect('Auth:SignIn');
+		}
+
 		$post = $this->database->table('posts')->get($postId);
 		if (!$post) {
 			$this->error('Post not found');

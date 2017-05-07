@@ -1,9 +1,11 @@
 {block content}
-    <h1 class="title is-1" n:block="title">Hello World Blog</h1>
 
     <div class="content">
-        <a class="button is-primary" n:href="Post:create">Write new post</a>
-        <br><br>
+        <div class="create-post" n:if="$user->loggedIn" >
+            <a class="button is-primary" n:href="Post:create">Write new post</a>
+            <br><br>
+        </div>
+
 
         {foreach $posts as $post}
             <div class="post">

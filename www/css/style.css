@@ -13,3 +13,12 @@
 .post {
     margin-bottom: 1em;
 }
+
+.notification {
+    padding: 0.5em 1em;
+    margin-bottom: 0.5em;
+}
+
+.notification:not(:last-child) {
+    margin-bottom: 0.5em;
+}

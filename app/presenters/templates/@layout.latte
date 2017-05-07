@@ -11,7 +11,25 @@
 
 <body>
 <div class="container">
-    <br>
+
+    <nav class="nav">
+
+        <div class="nav-left">
+            <a href="/" class="nav-item">
+                Home
+            </a>
+            {if $user->loggedIn}
+                <a n:href="Auth:SignOut" class="nav-item">
+                    Sign out
+                </a>
+            {else}
+                <a n:href="Auth:SignIn" class="nav-item">
+                    Sign In
+                </a>
+            {/if}
+        </div>
+    </nav>
+
     <div n:foreach="$flashes as $flash" n:class="notification, $flash->type">{$flash->message}</div>
 
     {include content}

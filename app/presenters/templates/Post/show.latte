@@ -7,7 +7,7 @@
 
         <div class="post">{$post->content}</div>
 
-        <a class="button is-primary" n:href="Post:edit $post->id">Edit post</a>
+        <a class="button is-primary" n:if="$user->loggedIn" n:href="Post:edit $post->id">Edit post</a>
 
     </div>
     <hr>
